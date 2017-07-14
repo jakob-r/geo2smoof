@@ -44,6 +44,9 @@ convertGoogleApiToSmoof = function(lat.range, lon.range, maximize = TRUE, google
       stopf("The server returned an unexpected result: %s", httr::content(httr.res, "text"))
     }
     res = httr::content(httr.res)
+    if (!is.null(res$error_message)) {
+      stopf("Googe Altitude API Error message: %s", res$error_message)
+    }
     sapply(res$results, function(x) x$elevation)
   }
   makeSingleObjectiveFunction(name = 'Google Maps API', fn = fn, has.simple.signature = TRUE, par.set = ps, minimize = !maximize, vectorized = TRUE)

@@ -52,6 +52,5 @@ lat.range = c(28.5, 27.5)
 lon.range = c(86.5, 87.5)
 gsf = convertGoogleApiToSmoof(lat.range = lat.range, lon.range = lon.range)
 gsf(c(29,87))
-plot2DNumeric(gsf, render.levels = TRUE, n.samples = 6)
-
+plot2DNumeric(gsf, render.levels = TRUE, n.samples = 5)
 ```
