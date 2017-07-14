@@ -1,0 +1,12 @@
+template:
+  params:
+    bootswatch: cosmo
+
+navbar:
+  left:
+  - text: Introduction
+    href: articles/geo2smoof.html
+    icon: fa-bolt
+  - text: Reference
+    icon: fa-book
+    href: reference/index.html

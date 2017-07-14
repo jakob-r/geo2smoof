@@ -1,0 +1,38 @@
+---
+output: github_document
+---
+# geo2smoof
+
+[![Build Status Linux](https://travis-ci.org/jakob-r/geo2smoof.svg?branch=master)](https://travis-ci.org/jakob-r/geo2smoof)
+[![Build Status Windows](https://ci.appveyor.com/api/projects/status/0nyd1gh5p19os07h?svg=true)](https://ci.appveyor.com/project/jakob-r/geo2smoof)
+[![Coverage Status](https://coveralls.io/repos/github/jakob-r/geo2smoof/badge.svg?branch=master)](https://coveralls.io/github/jakob-r/geo2smoof?branch=master)
+
+
+
+```{r, setup, include=FALSE}
+set.seed(123)
+knitr::opts_chunk$set(cache = TRUE, collapse = FALSE, warning = FALSE, error = FALSE)
+library(geo2smoof)
+```
+
+Convert a elevation RasterLayer from the package raster or an Google Maps Elevation API Call to a function that you can optimize.
+
+* [Issues and Bugs](https://github.com/jakob-r/geo2smoof/issues)
+* [Tutorial and Documentation](https://jakob-r.github.io/geo2smoof)
+
+## Installation
+```{r, eval=FALSE}
+devtools::install_github("jakob-r/geo2smoof")
+```
+
+
+```{r, warning=FALSE, message=FALSE}
+library(geo2smoof)
+# list available countries
+# raster::getData('ISO3')
+alt = raster::getData('alt', country='JAM')
+sf = convertRasterLayerToSmoof(raster.layer = alt)
+plot2DNumeric(sf, render.levels = TRUE)
+# find the highest point with optim()
+optim(c(140,80), fn = function(...) -1 * sf(...), )
+```

@@ -1,0 +1,57 @@
+---
+title: "mlrHyperopt"
+author: "Jakob Richter"
+output:
+  html_document:
+  toc: true
+toc_float:
+  collapsed: false
+smooth_scroll: false
+vignette: >
+  %\VignetteIndexEntry{mlrHyperopt}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE, cache = FALSE}
+set.seed(123)
+knitr::opts_chunk$set(cache = TRUE, collapse = FALSE)
+library(geo2smoof)
+```
+
+This Vignette is supposed to give you a short introduction and a glance at the key features of `geo2smoof`.
+For updated information make sure to check the GitHub project page:
+
+- [Project Page](https://github.com/jakob-r/geo2smoof/)
+- Online documentation of [geo2smoof](https://jakob-r.github.io/geo2smoof/)
+
+## Purpose
+
+geo2smoof truns a elevation map into a function that returns the elevation for given coordinate input.
+More precisely this package generates [smoof functions](https://github.com/jakobbossek/smoof) as these contain valuable meta information for each function.
+
+## Example usage
+
+### Raster
+
+```{r}
+alt = raster::getData('alt', country='SVN')
+sf = convertRasterLayerToSmoof(raster.layer = alt)
+getParamSet(sf)
+sf(c(204,103))
+plot2DNumeric(sf, render.levels = TRUE)
+```
+
+### Google Maps Elevation API
+
+You can register for a free API-Key [here](https://developers.google.com/maps/documentation/elevation/get-api-key).
+Afterwards you can save it using `saveGeo2SmoofConfig()` or write it manually in every call of `convertGoogleApiToSmoof()`.
+We will not use an API-Key here and thus are limited to just a few calls
+```{r}
+lat.range = c(28.5, 27.5)
+lon.range = c(86.5, 87.5)
+gsf = convertGoogleApiToSmoof(lat.range = lat.range, lon.range = lon.range)
+gsf(c(29,87))
+plot2DNumeric(gsf, render.levels = TRUE, n.samples = 6)
+
+```
