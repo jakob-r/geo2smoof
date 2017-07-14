@@ -1,5 +1,5 @@
 ---
-title: "mlrHyperopt"
+title: "geo2smoof"
 author: "Jakob Richter"
 output:
   html_document:

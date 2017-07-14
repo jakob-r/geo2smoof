@@ -4,7 +4,8 @@ output: github_document
 # geo2smoof
 
 [![Build Status Linux](https://travis-ci.org/jakob-r/geo2smoof.svg?branch=master)](https://travis-ci.org/jakob-r/geo2smoof)
-[![Build Status Windows](https://ci.appveyor.com/api/projects/status/0nyd1gh5p19os07h?svg=true)](https://ci.appveyor.com/project/jakob-r/geo2smoof)
+[![Build Status Windows](https://ci.appveyor.com/api/projects/status/gpgwbr4ac5lnp0jl?svg=true)](https://ci.appveyor.com/project/jakob-r/geo2smoof)
+
 [![Coverage Status](https://coveralls.io/repos/github/jakob-r/geo2smoof/badge.svg?branch=master)](https://coveralls.io/github/jakob-r/geo2smoof?branch=master)
 
 
