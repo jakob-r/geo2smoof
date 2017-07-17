@@ -45,7 +45,7 @@ convertGoogleApiToSmoof = function(lat.range, lon.range, maximize = TRUE, google
     }
     res = httr::content(httr.res)
     if (!is.null(res$error_message)) {
-      stopf("Googe Altitude API Error message: %s", res$error_message)
+      stopf("Googe Altitude API Error message: \"%s\" for API-Key: \"%s\"", res$error_message, gsub(x = google.apikey, pattern = "(.{5}).{9}(.*)", replacement = "\\1*********\\2", perl = FALSE))
     }
     sapply(res$results, function(x) x$elevation)
   }
