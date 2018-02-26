@@ -35,11 +35,26 @@ More precisely this package generates [smoof functions](https://github.com/jakob
 ### Raster
 
 ```{r}
-alt = raster::getData('alt', country='SVN')
-sf = convertRasterLayerToSmoof(raster.layer = alt)
+alt_s = raster::getData('alt', country='SVN', mask = FALSE)
+sf = convertRasterLayerToSmoof(raster.layer = alt_s)
 getParamSet(sf)
 sf(c(204,103))
-plot2DNumeric(sf, render.levels = TRUE)
+plot2DNumeric(sf, render.levels = TRUE, n.samples = 200)
+```
+
+### Combining Multiple Raster
+
+Generating a function out of the subsection of the alps:
+```{r}
+alt_d = raster::getData('alt', country='DEU')
+alt_a = raster::getData('alt', country='AUT')
+alt_c = raster::getData('alt', country='CHE', mask = FALSE)
+alt_i = raster::getData('alt', country='ITA')
+alt_all = do.call(raster::merge, list(alt_d, alt_a, alt_c, alt_i, alt_s))
+alt_cropped = raster::crop(alt_all, raster::extent(7,16,45.5,47.8))
+sf = convertRasterLayerToSmoof(raster.layer = alt_cropped)
+getParamSet(sf)
+plot2DNumeric(sf, render.levels = TRUE, n.samples = 200)
 ```
 
 ### Google Maps Elevation API
