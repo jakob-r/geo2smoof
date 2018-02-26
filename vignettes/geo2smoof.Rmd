@@ -62,7 +62,7 @@ plot2DNumeric(sf, render.levels = TRUE, n.samples = 200)
 You can register for a free API-Key [here](https://developers.google.com/maps/documentation/elevation/get-api-key).
 Afterwards you can save it using `saveGeo2SmoofConfig()` or write it manually in every call of `convertGoogleApiToSmoof()`.
 We will not use an API-Key here and thus are limited to just a few calls
-```{r}
+```{r, eval=FALSE}
 lat.range = c(28.5, 27.5)
 lon.range = c(86.5, 87.5)
 gsf = convertGoogleApiToSmoof(lat.range = lat.range, lon.range = lon.range)
