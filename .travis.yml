@@ -3,9 +3,6 @@ language: r
 sudo: false
 cache: packages
 
-r_packages:
-- devtools
-
 env:
   global:
     secure: 2vwdJ9nLrryIhq36EWDKaXmbxnJlvTlN8LmThFnW0J+yz1Mbg9rHZIO6UF0uoU7iSfl2DH2jP0/MA12p2bipAHc8WQfaI+3Bd1CC/pdTlB7qmQAqazG5LJHwhkb/raR3Qf1Jy/CvahHwy0EZ5+niNuxJKX6aISSSkiRZWJdydDMd5CZyLwUg3V5fdjekWTP5jwBzm328cW5YRqsa7xOCqkC0V6IwzL+S4n+NBRE6UjFuBZ6/TSpPEPn5OWK5OPtvrnRPE/pnx7k85/uqTYI8q5QBkUDghue0POr1fxJ2c9R6o56bAg9C9+r0a18vRcHcAmyjSV82K0oj3JXtEKiUFcr6ndvmYbPrfgjBgs+edwo6DDNsAVvB+o7OygRhZoSN6N3UcLdkJKNVcoK1mvqwuLx6ZGtbkBMmFpyzxnLu0xjaPAuHkze7eGo3b3v/NAgMGyJ2RrnGWkX6RBt7lw3miBvogSRMXQtikTjx/m4lymJJ9IBVOGDADUtjXemH6IZUWLd5a4d4gPmRQNaV/staiqEy5ncZMJ0O+SKHUb/psJTWKj5nRNH1zfVYHpOggdJfRaB6c2elOnG5r6GBrAmvDX53/EFp3btapOLoSc2kNO4DR+uhQhMDlx5GZXMFK00J5LrSqcTAYOrLvzm7LBq86H21h4k56O2erVxuq9Vew0E=
@@ -21,8 +18,12 @@ deploy:
 
 r:
   - release
+r_packages:
+  - devtools
+  - roxygen
 r_github_packages:
   - jimhester/covr
+  - hadley/pkgdown
 warnings_are_errors: true
 before_script:
 - R --no-save <<< 'library("devtools"); document()'
