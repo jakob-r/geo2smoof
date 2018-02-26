@@ -14,7 +14,7 @@ r_packages:
   - roxygen2
 r_github_packages:
   - jimhester/covr
-  - hadley/pkgdown
+  - r-lib/pkgdown
 warnings_are_errors: true
 before_script:
   - R --no-save <<< 'library("devtools"); document()'
