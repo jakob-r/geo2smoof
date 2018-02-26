@@ -14,7 +14,7 @@ Suggests: raster, httr, testthat, knitr
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2018-02-26 13:40:35 UTC; travis
+Packaged: 2018-02-26 13:45:40 UTC; travis
 Author: Richter Jakob [cre, aut]
 Maintainer: Richter Jakob <jakob1richter@gmail.com>
-Built: R 3.4.2; ; 2018-02-26 13:40:38 UTC; unix
+Built: R 3.4.2; ; 2018-02-26 13:45:42 UTC; unix
