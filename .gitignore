@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 *.Rcheck
+*.tar.gz
 *.grd
 *.vrt
 *.gri
