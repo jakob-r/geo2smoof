@@ -1,0 +1,19 @@
+Package: geo2smoof
+Type: Package
+Title: Geo2Smoof converts Elevation Informations to Smoof Functions
+Version: 0.1.0
+Authors@R: c(
+    person("Richter", "Jakob", NULL, "jakob1richter@gmail.com", role = c("cre", "aut"))
+    )
+Description: Convert a elevation RasterLayer from the package raster or an Google Maps Elevation API Call to a function that you can optimize. 
+License: BSD_3_clause + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends: smoof, ParamHelpers, checkmate, BBmisc
+Suggests: raster, httr, testthat, knitr
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
+NeedsCompilation: no
+Packaged: 2018-02-26 13:35:15 UTC; travis
+Author: Richter Jakob [cre, aut]
+Maintainer: Richter Jakob <jakob1richter@gmail.com>
