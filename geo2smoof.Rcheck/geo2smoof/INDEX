@@ -1,0 +1,8 @@
+convertGoogleApiToSmoof
+                        Converts a Google Maps API Call to Single
+                        Objective Function
+convertRasterLayerToSmoof
+                        Converts a Raster Layer to Single Objective
+                        Function
+saveGeo2SmoofConfig     Saves a list of geo2smoof configuration
+                        settings to file.

@@ -25,7 +25,7 @@ sf = convertRasterLayerToSmoof(raster.layer = alt)
 plot2DNumeric(sf, render.levels = TRUE)
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
 ``` r
 # find the highest point with optim()
