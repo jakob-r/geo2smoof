@@ -7,15 +7,6 @@ env:
   global:
     secure: 2vwdJ9nLrryIhq36EWDKaXmbxnJlvTlN8LmThFnW0J+yz1Mbg9rHZIO6UF0uoU7iSfl2DH2jP0/MA12p2bipAHc8WQfaI+3Bd1CC/pdTlB7qmQAqazG5LJHwhkb/raR3Qf1Jy/CvahHwy0EZ5+niNuxJKX6aISSSkiRZWJdydDMd5CZyLwUg3V5fdjekWTP5jwBzm328cW5YRqsa7xOCqkC0V6IwzL+S4n+NBRE6UjFuBZ6/TSpPEPn5OWK5OPtvrnRPE/pnx7k85/uqTYI8q5QBkUDghue0POr1fxJ2c9R6o56bAg9C9+r0a18vRcHcAmyjSV82K0oj3JXtEKiUFcr6ndvmYbPrfgjBgs+edwo6DDNsAVvB+o7OygRhZoSN6N3UcLdkJKNVcoK1mvqwuLx6ZGtbkBMmFpyzxnLu0xjaPAuHkze7eGo3b3v/NAgMGyJ2RrnGWkX6RBt7lw3miBvogSRMXQtikTjx/m4lymJJ9IBVOGDADUtjXemH6IZUWLd5a4d4gPmRQNaV/staiqEy5ncZMJ0O+SKHUb/psJTWKj5nRNH1zfVYHpOggdJfRaB6c2elOnG5r6GBrAmvDX53/EFp3btapOLoSc2kNO4DR+uhQhMDlx5GZXMFK00J5LrSqcTAYOrLvzm7LBq86H21h4k56O2erVxuq9Vew0E=
 
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: "$GH_TOKEN"
-  keep-history: true
-  target-branch: master
-  on:
-    branch: master
-
 r:
   - release
 r_packages:
@@ -26,7 +17,24 @@ r_github_packages:
   - hadley/pkgdown
 warnings_are_errors: true
 before_script:
-- R --no-save <<< 'library("devtools"); document()'
+  - R --no-save <<< 'library("devtools"); document()'
 after_success:
-  - R --no-save <<< 'devtools::install(); pkgdown::build_site()'
-  - Rscript -e 'covr::coveralls()'
+  - 'if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" && "${TRAVIS_R_VERSION_STRING}"
+  == "release" ]]; then
+      R --no-save <<< "devtools::install(); pkgdown::build_site()";
+      git checkout master;
+      export TRAVIS_COMMIT_MSG="$(git log --format=%B --no-merges -n 1)";
+      git config --global user.name "Travis CI";
+      git config --global user.email "$COMMIT_AUTHOR_EMAIL";
+      git config credential.helper "store --file=.git/credentials";
+      echo "https://${GH_TOKEN}:@github.com" >> .git/credentials;
+      git config push.default matching;
+      git add --force man/*;
+      git add --force README.md;
+      git add --force README_files/*;
+      git add --force docs/*;
+      git rm -r --cached $(find . -type d -name "*_cache");
+      git commit man DESCRIPTION NAMESPACE README.md README_files docs -m "update auto-generated documentation [ci skip]" -m "$TRAVIS_COMMIT_MSG" || true;
+      git push;
+    fi;'
+  - if [[ "${TRAVIS_R_VERSION_STRING}" == "release" ]]; then Rscript -e 'covr::coveralls()'; fi;
