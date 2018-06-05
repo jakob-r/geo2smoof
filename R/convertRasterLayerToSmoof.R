@@ -21,12 +21,10 @@ convertRasterLayerToSmoof = function(raster.layer, maximize = TRUE, interpolate 
   assertFlag(interpolate)
   assertFlag(use.constraint.fn)
 
-  alt.mat = t(raster::as.matrix(raster.layer))
-  alt.mat = alt.mat[,rev(seq_len(ncol(alt.mat)))]
   if (maximize) {
-    ref = max(alt.mat, na.rm = TRUE)
+    ref = raster.layer@data@max
   } else {
-    ref = min(alt.mat, na.rm = TRUE)
+    ref = raster.layer@data@min
   }
   # opt = which(alt.mat == ref, arr.ind = TRUE)
   ymin = raster.layer@extent@ymin
@@ -40,7 +38,7 @@ convertRasterLayerToSmoof = function(raster.layer, maximize = TRUE, interpolate 
     } else {
       coords = x
     }
-    coords = coords[,c(2,1)]
+    coords = coords[,c(2,1),drop = FALSE]
     coords = sp::SpatialPoints(coords = coords)
     raster::extract(raster.layer, coords, method = ifelse(interpolate, "bilinear", "simple"))
   }

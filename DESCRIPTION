@@ -14,9 +14,11 @@ Depends:
     ParamHelpers,
     checkmate,
     BBmisc
-Suggests:
+Imports:
     raster,
     httr,
+    sp
+Suggests:
     testthat,
     knitr
 VignetteBuilder: knitr
