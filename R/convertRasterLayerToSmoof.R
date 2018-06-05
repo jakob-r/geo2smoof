@@ -23,25 +23,29 @@ convertRasterLayerToSmoof = function(raster.layer, maximize = TRUE, interpolate 
 
   alt.mat = t(raster::as.matrix(raster.layer))
   alt.mat = alt.mat[,rev(seq_len(ncol(alt.mat)))]
-  # image(alt.mat)
   if (maximize) {
     ref = max(alt.mat, na.rm = TRUE)
   } else {
     ref = min(alt.mat, na.rm = TRUE)
   }
-  opt = which(alt.mat == ref, arr.ind = TRUE)
-  if (interpolate) {
-    ps = makeNumericParamSet('coords', 2, lower = c(1,1), upper = dim(alt.mat))
-    fn = function(x) {alt.mat[round(x[1]), round(x[2])]}
-    constraint.fn = function(x) {!is.na(alt.mat[round(x[1]), round(x[2])])}
-    storage.mode(opt) <- "double"
-  } else {
-    ps = makeParamSet(
-      makeIntegerVectorParam('coords', 2, lower = c(1,1), upper = dim(alt.mat))
-    )
-    fn = function(x) {alt.mat[x[1], x[2]]}
-    constraint.fn = function(x) {!is.na(alt.mat[x[1], x[2]])}
+  # opt = which(alt.mat == ref, arr.ind = TRUE)
+  ymin = raster.layer@extent@ymin
+  ymax = raster.layer@extent@ymax
+  xmin = raster.layer@extent@xmin
+  xmax = raster.layer@extent@xmax
+  ps = makeNumericParamSet('coords', 2, lower = c(ymin, xmin), upper = c(ymax, xmax))
+  fn = function(x) {
+    if (is.null(dim(x))) {
+      coords = t(x)
+    } else {
+      coords = x
+    }
+    coords = coords[,c(2,1)]
+    coords = sp::SpatialPoints(coords = coords)
+    raster::extract(raster.layer, coords, method = ifelse(interpolate, "bilinear", "simple"))
   }
-  if (!use.constraint.fn) constraint.fn = NULL
-  makeSingleObjectiveFunction(name = coalesce(names(raster.layer), 'RasterLayer'), fn = fn, has.simple.signature = TRUE, par.set = ps, constraint.fn = constraint.fn, global.opt.value = ref, global.opt.params = opt, minimize = !maximize)
+  if (!use.constraint.fn) constraint.fn = NULL else {
+    constraint.fn = function(x) {!is.na(fn(x))}
+  }
+  makeSingleObjectiveFunction(name = coalesce(names(raster.layer), 'RasterLayer'), fn = fn, has.simple.signature = TRUE, par.set = ps, constraint.fn = constraint.fn, global.opt.value = ref, minimize = !maximize)
 }
