@@ -31,14 +31,14 @@ convertRasterLayerToSmoof = function(raster.layer, maximize = TRUE, interpolate 
   ymax = raster.layer@extent@ymax
   xmin = raster.layer@extent@xmin
   xmax = raster.layer@extent@xmax
-  ps = makeNumericParamSet('coords', 2, lower = c(ymin, xmin), upper = c(ymax, xmax))
+  ps = makeNumericParamSet('coords', 2, lower = c(xmin, ymin), upper = c(xmax, ymax))
   fn = function(x) {
     if (is.null(dim(x))) {
       coords = t(x)
     } else {
       coords = x
     }
-    coords = coords[,c(2,1),drop = FALSE]
+    #coords = coords[,c(2,1),drop = FALSE]
     coords = sp::SpatialPoints(coords = coords)
     raster::extract(raster.layer, coords, method = ifelse(interpolate, "bilinear", "simple"))
   }
