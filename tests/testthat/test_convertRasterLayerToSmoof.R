@@ -1,3 +1,5 @@
+context("convertRasterLayerToSmoof")
+
 test_that("convertRasterLayerToSmoof works", {
   alt = raster::getData('alt', country='SVN')
   sf = convertRasterLayerToSmoof(raster.layer = alt)
